@@ -33,4 +33,3 @@ pairwise.interaction.KL<-function(ligand_mat,receptor_mat,method){
   KL<-rowSums(interaction_mat)
   return(KL)
 }
-

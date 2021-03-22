@@ -11,21 +11,20 @@
 make_expressed_net<-function(expression_data,expressed_thresh,receptor_ligand,KL_method,pseudo_count){
   #expression_data: 1st column "genes" (gene symbol, upper case); remaining columns: gene expression level
   expression_data$genes<-toupper(expression_data$genes)
+
   n_cell<-ncol(expression_data)-1
+  n_lr <- length(colnames(receptor_ligand))+1
   good<- rowSums(expression_data[,2:ncol(expression_data)]>expressed_thresh)>=1 # expressed above threshold in at least one cell type
   expressed_genes<-expression_data$genes[good]
   expression_data<-expression_data[good,]
   expression_data[,2:ncol(expression_data)]<- expression_data[,2:ncol(expression_data)] + pseudo_count
-
   expressed_net<- receptor_ligand[receptor_ligand$Ligand.ApprovedSymbol %in% expressed_genes & receptor_ligand$Receptor.ApprovedSymbol %in% expressed_genes,]
   ind<-match(expressed_net$Ligand.ApprovedSymbol,expression_data$genes)
   expressed_net<-cbind(expressed_net,expression_data[ind,2:ncol(expression_data)])
-  colnames(expressed_net)[17:(17+n_cell-1)]<-paste("ligand_",colnames(expression_data)[2:ncol(expression_data)],sep="")
-
+  colnames(expressed_net)[n_lr:((n_lr+n_cell)-1)]<-paste("ligand_",colnames(expression_data)[2:ncol(expression_data)],sep="")
   ind<-match(expressed_net$Receptor.ApprovedSymbol,expression_data$genes)
   expressed_net<-cbind(expressed_net,expression_data[ind,2:ncol(expression_data)])
-  colnames(expressed_net)[(17+n_cell):(17+2*n_cell-1)]<-paste("receptor_",colnames(expression_data)[2:ncol(expression_data)],sep="")
-
-  expressed_net$KL<-pairwise.interaction.KL(as.matrix(expressed_net[,17:(17+n_cell-1)]),as.matrix(expressed_net[,(17+n_cell):(17+2*n_cell-1)]),method=KL_method)
+  colnames(expressed_net)[(n_lr+n_cell):((n_lr+(2*n_cell))-1)]<-paste("receptor_",colnames(expression_data)[2:ncol(expression_data)],sep="")
+  expressed_net$KL<-pairwise.interaction.KL(as.matrix(expressed_net[,n_lr:((n_lr+n_cell)-1)]),as.matrix(expressed_net[,(n_lr+n_cell):((n_lr+(2*n_cell))-1)]),method=KL_method)
   return(expressed_net)
 }

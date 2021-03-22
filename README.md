@@ -1,7 +1,12 @@
 # _talklr_ uncovers ligand-receptor mediated intercellular crosstalk 
+
+
+**This is a custom version of the package talkLR which allows the usage of custom Ligand Receptor interaction resource.**
+
 talklr (intercellular cross**TALK** using **L**igand-**R**eceptor)uses Kullback-Leibler divergence, a concept from inforamtion theory, to uncover interesting ligand-receptor interactions among multiple cell types in single cell RNA-seq data.  
 This is an R package for talklr, so that you can integrate talklr analysis into your any existing scRNA-seq bioinformatic workflow.  
 To install talklr R package, you need to first install the _devltools_ R package, then run:
+
 ```r
 library(devtools)
 install_github("yuliangwang/talklr")

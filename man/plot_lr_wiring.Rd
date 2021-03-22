@@ -4,7 +4,7 @@
 \alias{plot_lr_wiring}
 \title{Plot ligand-receptor wiring diagram}
 \usage{
-plot_lr_wiring(ligand_exprs, receptor_exprs, cell_labels)
+plot_lr_wiring(ligand_exprs, receptor_exprs, cell_labels, thresh)
 }
 \arguments{
 \item{ligand_exprs}{ligand expression matrix}
